@@ -53,7 +53,10 @@ class MyClass(GeneratedClass):
                    "Please check your script arguments. Run with -h option for help.")
             sys.exit(1)
         self.logger.info("はろー")
-        self.explore(session)
+
+        # self.explore(session)
+        # self.saveMapAsNumpy(session)
+        self.moveInMap(session)
 
     def onInput_onStop(self):
         self.onUnload() #it is recommended to reuse the clean-up as the box is stopped
@@ -74,7 +77,7 @@ class MyClass(GeneratedClass):
         self.motion_service.wakeUp()
 
         # Explore the environement, in a radius of 2 m.
-        radius = 1.0
+        radius = 30.0
         self.logger.info(type(self.navigation_service))
         error_code = self.navigation_service.explore(radius)
         self.logger.info(error_code)
@@ -134,7 +137,38 @@ class MyClass(GeneratedClass):
                 self.onStopped()
         else:
             self.logger.warning("No ALTabletService, can't display the image.")
-            self.onStopped()]]></content></script><Input name="onLoad" type="1" type_size="1" nature="0" inner="1" tooltip="Signal sent when diagram is loaded." id="1" /><Input name="onStart" type="1" type_size="1" nature="2" inner="0" tooltip="Box behavior starts when a signal is received on this input." id="2" /><Input name="onStop" type="1" type_size="1" nature="3" inner="0" tooltip="Box behavior stops when a signal is received on this input." id="3" /><Output name="onStopped" type="1" type_size="1" nature="1" inner="0" tooltip="Signal sent when box behavior is finished." id="4" /></Box><Box name="Show Image" id="13" localization="8" tooltip="display an image on the screen&#x0A;&#x0A;V1.0.0&#x0A;" x="626" y="482"><bitmap>media/images/box/interaction/rec_movie.png</bitmap><script language="4"><content><![CDATA[
+            self.onStopped()
+
+    def moveInMap(self, session):
+        path = '/home/nao/.local/share/Explorer/2017-10-13T144531.875Z.explo'
+        self.navigation_service = session.service("ALNavigation")
+        self.motion_service = session.service("ALMotion")
+        self.motion_service.wakeUp()
+        self.navigation_service.loadExploration(path)
+        self.navigation_service.relocalizeInMap([0., 0., 0.])
+        self.navigation_service.startLocalization()
+        # Come back to initial position
+        # self.navigation_service.navigateToInMap([0., 0., 0.])
+        self.navigation_service.navigateToInMap([7.7, -4.6, 0.])
+        self.navigation_service.navigateToInMap([0., 0., 0.])
+        self.navigation_service.stopLocalization()
+        self.logger.info( "finish!" )
+
+    def saveMapAsNumpy(self, session):
+        path = '/home/nao/.local/share/Explorer/2017-10-13T144531.875Z.explo'
+        self.navigation_service = session.service("ALNavigation")
+        self.navigation_service.loadExploration(path)
+         # Retrieve and display the map built by the robot
+        result_map = self.navigation_service.getMetricalMap()
+        self.logger.info(result_map)
+        map_width = result_map[1]
+        map_height = result_map[2]
+        img = numpy.array(result_map[4]).reshape(map_width, map_height)
+        img = (100 - img) * 2.55 # from 0..100 to 255..0
+        img = numpy.array(img, numpy.uint8)
+        img_url = path.rsplit('/', 1)[0] + '/image.npy'
+        numpy.save(img_url, img)
+        self.logger.info(img)]]></content></script><Input name="onLoad" type="1" type_size="1" nature="0" inner="1" tooltip="Signal sent when diagram is loaded." id="1" /><Input name="onStart" type="1" type_size="1" nature="2" inner="0" tooltip="Box behavior starts when a signal is received on this input." id="2" /><Input name="onStop" type="1" type_size="1" nature="3" inner="0" tooltip="Box behavior stops when a signal is received on this input." id="3" /><Output name="onStopped" type="1" type_size="1" nature="1" inner="0" tooltip="Signal sent when box behavior is finished." id="4" /></Box><Box name="Show Image" id="13" localization="8" tooltip="display an image on the screen&#x0A;&#x0A;V1.0.0&#x0A;" x="626" y="482"><bitmap>media/images/box/interaction/rec_movie.png</bitmap><script language="4"><content><![CDATA[
 
 class MyClass(GeneratedClass):
 
