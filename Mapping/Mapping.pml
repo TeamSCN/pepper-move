@@ -5,7 +5,9 @@
         <BehaviorDescription name="behavior" src="behavior_1" xar="behavior.xar" />
     </BehaviorDescriptions>
     <Dialogs />
-    <Resources />
+    <Resources>
+        <File name="test" src="test.pmt" />
+    </Resources>
     <Topics />
     <IgnoredPaths />
     <Translations auto-fill="ja_JP">
