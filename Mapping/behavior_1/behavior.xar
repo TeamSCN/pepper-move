@@ -150,9 +150,9 @@ class MyClass(GeneratedClass):
         # self.logger.info(result_map)
         self.logger.info('Start time: ' + time.ctime())
         start_time = time.time()
-        time_out = 120
+        time_out = 600
         allowable_err = 1.0
-        move_hist = [[start_pos, 0]]
+        move_hist = [[start_pos[0], start_pos[1], start_pos[2], 0.0]]
         position = start_pos
         while True:
             self.navigation_service.startLocalization()
@@ -160,13 +160,13 @@ class MyClass(GeneratedClass):
             position = self.navigation_service.getRobotPositionInMap()[0]
             self.navigation_service.stopLocalization()
             elapsed_time = time.time() - start_time
-            move_hist.append([position, elapsed_time])
+            move_hist.append([position[0], position[1], position[2], elapsed_time])
             if math.sqrt((dest[0]-position[0])**2 + (dest[1]-position[1])**2) < allowable_err or elapsed_time > time_out:
                 break
             else:
                 self.logger.info('I\'m in ' + str(position) + '.  elapsed_time(s):' + str(elapsed_time))
 
-        self.logger.info('move_hist:' + str(move_hist))
+        # self.logger.info('move_hist:' + str(move_hist))
         if elapsed_time <= time_out:
             self.logger.info('I reached destination('+str(position)+') in '+str(elapsed_time)+' seconds')
         else:
@@ -178,7 +178,10 @@ class MyClass(GeneratedClass):
         todaydetail = datetime.datetime.today()
         dir_name = '/home/nao/.local/share/Explorer/MoveHist/' \
                     + path.rsplit('/', 1)[1].replace('.explo', '')
-        os.makedirs(dir_name)
+        try:
+            os.makedirs(dir_name)
+        except:
+            pass
         fname = dir_name + '/' + todaydetail.strftime("%Y%m%d%H%M%S") + '.csv'
         with open(fname, 'w') as f:
             writer = csv.writer(f, lineterminator='\n')
