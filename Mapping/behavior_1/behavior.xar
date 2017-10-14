@@ -6,8 +6,12 @@
 import qi
 import sys
 import numpy
+import csv
 import Image
-
+import math
+import time
+import datetime
+import os
 
 
 class MyClass(GeneratedClass):
@@ -37,8 +41,18 @@ class MyClass(GeneratedClass):
         self.logger.info("はろー")
 
         # self.explore(session)
-        # self.saveMapAsNumpy(session)
-        self.moveInMap(session)
+
+        path = '/home/nao/.local/share/Explorer/2017-10-14T024423.603Z.explo'
+        # self.saveMapAsNumpy(session, path)
+        start_pos = [0., 0., 0.]
+        # dest = [4.0, -6.00, 0.]
+        dest = [0.0, -5.00, 0.]
+        position, move_hist = self.moveInMap(session, path, start_pos, dest)
+        self.saveMoveHist(path, move_hist)
+        self.logger.info('I start to go back to the start position!')
+        position, move_hist = self.moveInMap(session, path, position, start_pos)
+        self.logger.info('finish!')
+        self.logger.info('final position:' + str(position))
 
     def onInput_onStop(self):
         self.onUnload() #it is recommended to reuse the clean-up as the box is stopped
@@ -59,7 +73,7 @@ class MyClass(GeneratedClass):
         self.motion_service.wakeUp()
 
         # Explore the environement, in a radius of 2 m.
-        radius = 30.0
+        radius = 25.0
         self.logger.info(type(self.navigation_service))
         error_code = self.navigation_service.explore(radius)
         self.logger.info(error_code)
@@ -88,7 +102,8 @@ class MyClass(GeneratedClass):
         img = numpy.array(result_map[4]).reshape(map_width, map_height)
         img = (100 - img) * 2.55 # from 0..100 to 255..0
         img = numpy.array(img, numpy.uint8)
-        img_url = path.rsplit('/', 1)[0] + '/image.jpg'
+        # img_url = path.rsplit('/', 1)[0] + '/image.jpg'
+        img_url = path.replace('explo', 'jpg')
 
         Image.frombuffer('L',  (map_width, map_height), img, 'raw', 'L', 0, 1).save(img_url, 'JPEG')
 
@@ -125,23 +140,53 @@ class MyClass(GeneratedClass):
             self.logger.warning("No ALTabletService, can't display the image.")
             self.onStopped()
 
-    def moveInMap(self, session):
-        path = '/home/nao/.local/share/Explorer/2017-10-13T144531.875Z.explo'
+    def moveInMap(self, session, path, start_pos, dest):
         self.navigation_service = session.service("ALNavigation")
         self.motion_service = session.service("ALMotion")
         self.motion_service.wakeUp()
         self.navigation_service.loadExploration(path)
-        self.navigation_service.relocalizeInMap([0., 0., 0.])
-        self.navigation_service.startLocalization()
-        # Come back to initial position
-        # self.navigation_service.navigateToInMap([0., 0., 0.])
-        self.navigation_service.navigateToInMap([7.7, -4.6, 0.])
-        self.navigation_service.navigateToInMap([0., 0., 0.])
-        self.navigation_service.stopLocalization()
-        self.logger.info( "finish!" )
+        self.navigation_service.relocalizeInMap(start_pos)
+        # result_map = self.navigation_service.getMetricalMap()
+        # self.logger.info(result_map)
+        self.logger.info('Start time: ' + time.ctime())
+        start_time = time.time()
+        time_out = 120
+        allowable_err = 1.0
+        move_hist = [[start_pos, 0]]
+        position = start_pos
+        while True:
+            self.navigation_service.startLocalization()
+            self.navigation_service.navigateToInMap(dest)
+            position = self.navigation_service.getRobotPositionInMap()[0]
+            self.navigation_service.stopLocalization()
+            elapsed_time = time.time() - start_time
+            move_hist.append([position, elapsed_time])
+            if math.sqrt((dest[0]-position[0])**2 + (dest[1]-position[1])**2) < allowable_err or elapsed_time > time_out:
+                break
+            else:
+                self.logger.info('I\'m in ' + str(position) + '.  elapsed_time(s):' + str(elapsed_time))
 
-    def saveMapAsNumpy(self, session):
-        path = '/home/nao/.local/share/Explorer/2017-10-13T144531.875Z.explo'
+        self.logger.info('move_hist:' + str(move_hist))
+        if elapsed_time <= time_out:
+            self.logger.info('I reached destination('+str(position)+') in '+str(elapsed_time)+' seconds')
+        else:
+            self.logger.info('Timeout!  I did not reach destination('+str(dest)+').  I\'m in ' + str(position) + '.  Sorry!')
+
+        return position, move_hist
+
+    def saveMoveHist(self, path, move_hist):
+        todaydetail = datetime.datetime.today()
+        dir_name = '/home/nao/.local/share/Explorer/MoveHist/' \
+                    + path.rsplit('/', 1)[1].replace('.explo', '')
+        os.makedirs(dir_name)
+        fname = dir_name + '/' + todaydetail.strftime("%Y%m%d%H%M%S") + '.csv'
+        with open(fname, 'w') as f:
+            writer = csv.writer(f, lineterminator='\n')
+            writer.writerows(move_hist)
+        self.logger.info('Saved ' + fname)
+
+
+    def saveMapAsNumpy(self, session, path):
         self.navigation_service = session.service("ALNavigation")
         self.navigation_service.loadExploration(path)
          # Retrieve and display the map built by the robot
@@ -152,7 +197,8 @@ class MyClass(GeneratedClass):
         img = numpy.array(result_map[4]).reshape(map_width, map_height)
         img = (100 - img) * 2.55 # from 0..100 to 255..0
         img = numpy.array(img, numpy.uint8)
-        img_url = path.rsplit('/', 1)[0] + '/image.npy'
+        # img_url = path.rsplit('/', 1)[0] + '/image.npy'
+        img_url = path.replace('explo', 'npy')
         numpy.save(img_url, img)
         self.logger.info(img)]]></content></script><Input name="onLoad" type="1" type_size="1" nature="0" inner="1" tooltip="Signal sent when diagram is loaded." id="1" /><Input name="onStart" type="1" type_size="1" nature="2" inner="0" tooltip="Box behavior starts when a signal is received on this input." id="2" /><Input name="onStop" type="1" type_size="1" nature="3" inner="0" tooltip="Box behavior stops when a signal is received on this input." id="3" /><Output name="onStopped" type="1" type_size="1" nature="1" inner="0" tooltip="Signal sent when box behavior is finished." id="4" /></Box><Box name="Show Image" id="13" localization="8" tooltip="display an image on the screen&#x0A;&#x0A;V1.0.0&#x0A;" x="626" y="482"><bitmap>media/images/box/interaction/rec_movie.png</bitmap><script language="4"><content><![CDATA[
 
