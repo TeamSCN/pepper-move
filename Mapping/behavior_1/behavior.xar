@@ -24,12 +24,13 @@ class MyClass(GeneratedClass):
 
     def onUnload(self):
         #put clean-up code here
-        pass
+        self.stop_flg = True
 
     def onInput_onStart(self):
         #self.onStopped() #activate the output of the box
         ip = "pepper.local"
         port = 9559
+        self.stop_flg = False
 
         session = qi.Session()
         try:
@@ -45,8 +46,8 @@ class MyClass(GeneratedClass):
         path = '/home/nao/.local/share/Explorer/2017-10-14T024423.603Z.explo'
         # self.saveMapAsNumpy(session, path)
         start_pos = [0., 0., 0.]
-        # dest = [4.0, -6.00, 0.]
-        dest = [0.0, -5.00, 0.]
+        dest = [4.0, -6.00, 0.]
+        # dest = [0.0, -5.00, 0.]
         position, move_hist = self.moveInMap(session, path, start_pos, dest)
         self.saveMoveHist(path, move_hist)
         self.logger.info('I start to go back to the start position!')
@@ -57,7 +58,6 @@ class MyClass(GeneratedClass):
     def onInput_onStop(self):
         self.onUnload() #it is recommended to reuse the clean-up as the box is stopped
         self.onStopped() #activate the output of the box
-
 
     def explore(self, session):
         """
@@ -161,13 +161,16 @@ class MyClass(GeneratedClass):
             self.navigation_service.stopLocalization()
             elapsed_time = time.time() - start_time
             move_hist.append([position[0], position[1], position[2], elapsed_time])
-            if math.sqrt((dest[0]-position[0])**2 + (dest[1]-position[1])**2) < allowable_err or elapsed_time > time_out:
+            if math.sqrt((dest[0]-position[0])**2 + (dest[1]-position[1])**2) < allowable_err \
+                or elapsed_time > time_out or self.stop_flg:
                 break
             else:
                 self.logger.info('I\'m in ' + str(position) + '.  elapsed_time(s):' + str(elapsed_time))
 
         # self.logger.info('move_hist:' + str(move_hist))
-        if elapsed_time <= time_out:
+        if self.stop_flg:
+            self.logger.info('Stopped!  I did not reach destination('+str(dest)+').  I\'m in ' + str(position) + '.  Sorry!')
+        elif elapsed_time <= time_out:
             self.logger.info('I reached destination('+str(position)+') in '+str(elapsed_time)+' seconds')
         else:
             self.logger.info('Timeout!  I did not reach destination('+str(dest)+').  I\'m in ' + str(position) + '.  Sorry!')
