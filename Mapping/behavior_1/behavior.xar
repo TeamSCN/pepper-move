@@ -823,7 +823,7 @@ class MyClass(GeneratedClass):
             elif newValue == "World":
                 self.frame = 1
             elif newValue == "Robot":
-                self.frame = 2]]></content></script><Input name="onLoad" type="1" type_size="1" nature="0" inner="1" tooltip="Signal sent when diagram is loaded." id="1" /><Input name="onStart" type="1" type_size="1" nature="2" inner="0" tooltip="Box behavior starts when a signal is received on this input." id="2" /><Input name="onStop" type="1" type_size="1" nature="3" inner="0" tooltip="Box behavior stops when a signal is received on this input." id="3" /><Output name="onStopped" type="1" type_size="1" nature="1" inner="0" tooltip="Signal sent when box behavior is finished." id="4" /><Parameter name="X (m)" inherits_from_parent="0" content_type="2" value="0.001" default_value="1" min="0.001" max="10" tooltip="X coordinate of the target to look at." id="5" /><Parameter name="Y (m)" inherits_from_parent="0" content_type="2" value="-1" default_value="0" min="-10" max="10" tooltip="Y coordinate of the target to look at." id="6" /><Parameter name="Z (m)" inherits_from_parent="0" content_type="2" value="0" default_value="0" min="-10" max="10" tooltip="Z coordinate of the target to look at." id="7" /><Parameter name="Speed (%)" inherits_from_parent="0" content_type="1" value="20" default_value="50" min="1" max="100" tooltip="Speed to move the head towards the desired position." id="8" /><Parameter name="WholeBody" inherits_from_parent="0" content_type="0" value="0" default_value="0" tooltip="Use whole body constraints" id="9" /><Parameter name="Frame" inherits_from_parent="0" content_type="3" value="Robot" default_value="Torso" custom_choice="0" tooltip="Select the frame of target." id="10"><Choice value="Torso" /><Choice value="World" /><Choice value="Robot" /></Parameter></Box><Box name="Json server" id="10" localization="8" tooltip="This box contains a basic python script and can be used to create any python script box you would like.&#x0A;&#x0A;To edit its script, double-click on it." x="113" y="79"><bitmap>media/images/box/box-python-script.png</bitmap><script language="4"><content><![CDATA[from BaseHTTPServer import BaseHTTPRequestHandler, HTTPServer
+                self.frame = 2]]></content></script><Input name="onLoad" type="1" type_size="1" nature="0" inner="1" tooltip="Signal sent when diagram is loaded." id="1" /><Input name="onStart" type="1" type_size="1" nature="2" inner="0" tooltip="Box behavior starts when a signal is received on this input." id="2" /><Input name="onStop" type="1" type_size="1" nature="3" inner="0" tooltip="Box behavior stops when a signal is received on this input." id="3" /><Output name="onStopped" type="1" type_size="1" nature="1" inner="0" tooltip="Signal sent when box behavior is finished." id="4" /><Parameter name="X (m)" inherits_from_parent="0" content_type="2" value="0.001" default_value="1" min="0.001" max="10" tooltip="X coordinate of the target to look at." id="5" /><Parameter name="Y (m)" inherits_from_parent="0" content_type="2" value="-1" default_value="0" min="-10" max="10" tooltip="Y coordinate of the target to look at." id="6" /><Parameter name="Z (m)" inherits_from_parent="0" content_type="2" value="0" default_value="0" min="-10" max="10" tooltip="Z coordinate of the target to look at." id="7" /><Parameter name="Speed (%)" inherits_from_parent="0" content_type="1" value="20" default_value="50" min="1" max="100" tooltip="Speed to move the head towards the desired position." id="8" /><Parameter name="WholeBody" inherits_from_parent="0" content_type="0" value="0" default_value="0" tooltip="Use whole body constraints" id="9" /><Parameter name="Frame" inherits_from_parent="0" content_type="3" value="Robot" default_value="Torso" custom_choice="0" tooltip="Select the frame of target." id="10"><Choice value="Torso" /><Choice value="World" /><Choice value="Robot" /></Parameter></Box><Box name="Json server" id="10" localization="8" tooltip="This box contains a basic python script and can be used to create any python script box you would like.&#x0A;&#x0A;To edit its script, double-click on it." x="245" y="43"><bitmap>media/images/box/box-python-script.png</bitmap><script language="4"><content><![CDATA[from BaseHTTPServer import BaseHTTPRequestHandler, HTTPServer
 import json
 import datetime
 
@@ -908,7 +908,7 @@ class MyHandler(BaseHTTPRequestHandler):
 
     @staticmethod
     def setParent(parent):
-        MyHandler._parent = parent]]></content></script><Input name="onLoad" type="1" type_size="1" nature="0" inner="1" tooltip="Signal sent when diagram is loaded." id="1" /><Input name="onStart" type="1" type_size="1" nature="2" inner="0" tooltip="Box behavior starts when a signal is received on this input." id="2" /><Input name="onStop" type="1" type_size="1" nature="3" inner="0" tooltip="Box behavior stops when a signal is received on this input." id="3" /><Output name="success" type="1" type_size="1" nature="1" inner="0" tooltip="" id="4" /><Output name="stop_server" type="1" type_size="1" nature="1" inner="0" tooltip="" id="5" /></Box><Box name="Move by Json and Take Photos" id="6" localization="8" tooltip="This box contains a basic python script and can be used to create any python script box you would like.&#x0A;&#x0A;To edit its script, double-click on it." x="292" y="362"><bitmap>media/images/box/box-python-script.png</bitmap><script language="4"><content><![CDATA[import math
+        MyHandler._parent = parent]]></content></script><Input name="onLoad" type="1" type_size="1" nature="0" inner="1" tooltip="Signal sent when diagram is loaded." id="1" /><Input name="onStart" type="1" type_size="1" nature="2" inner="0" tooltip="Box behavior starts when a signal is received on this input." id="2" /><Input name="onStop" type="1" type_size="1" nature="3" inner="0" tooltip="Box behavior stops when a signal is received on this input." id="3" /><Output name="success" type="1" type_size="1" nature="1" inner="0" tooltip="" id="4" /><Output name="stop_server" type="1" type_size="1" nature="1" inner="0" tooltip="" id="5" /></Box><Box name="Move by Json and Take Photos" id="6" localization="8" tooltip="This box contains a basic python script and can be used to create any python script box you would like.&#x0A;&#x0A;To edit its script, double-click on it." x="381" y="195"><bitmap>media/images/box/box-python-script.png</bitmap><script language="4"><content><![CDATA[import math
 import time
 import datetime
 import json
@@ -1046,4 +1046,221 @@ class MyClass(GeneratedClass):
         target = os.path.join(dirname, '*')
         files = [(f, os.path.getmtime(f)) for f in glob(target)]
         latest_modified_file_path = sorted(files, key=lambda files: files[1])[-1]
-        return latest_modified_file_path[0]]]></content></script><Input name="onLoad" type="1" type_size="1" nature="0" inner="1" tooltip="Signal sent when diagram is loaded." id="1" /><Input name="onStart" type="1" type_size="1" nature="2" inner="0" tooltip="Box behavior starts when a signal is received on this input." id="2" /><Input name="onStop" type="1" type_size="1" nature="3" inner="0" tooltip="Box behavior stops when a signal is received on this input." id="3" /><Output name="onStopped" type="1" type_size="1" nature="1" inner="0" tooltip="Signal sent when box behavior is finished." id="4" /></Box><Link inputowner="0" indexofinput="4" outputowner="2" indexofoutput="4" /><Link inputowner="5" indexofinput="2" outputowner="9" indexofoutput="4" /><Link inputowner="5" indexofinput="2" outputowner="7" indexofoutput="4" /><Link inputowner="0" indexofinput="4" outputowner="5" indexofoutput="3" /><Link inputowner="10" indexofinput="2" outputowner="0" indexofoutput="2" /><Link inputowner="6" indexofinput="2" outputowner="10" indexofoutput="4" /><Link inputowner="0" indexofinput="4" outputowner="10" indexofoutput="5" /><Link inputowner="10" indexofinput="2" outputowner="6" indexofoutput="4" /></Diagram></BehaviorKeyframe></BehaviorLayer></Timeline></Box></ChoregrapheProject>
+        return latest_modified_file_path[0]]]></content></script><Input name="onLoad" type="1" type_size="1" nature="0" inner="1" tooltip="Signal sent when diagram is loaded." id="1" /><Input name="onStart" type="1" type_size="1" nature="2" inner="0" tooltip="Box behavior starts when a signal is received on this input." id="2" /><Input name="onStop" type="1" type_size="1" nature="3" inner="0" tooltip="Box behavior stops when a signal is received on this input." id="3" /><Output name="onStopped" type="1" type_size="1" nature="1" inner="0" tooltip="Signal sent when box behavior is finished." id="4" /></Box><Box name="Json server including move" id="8" localization="8" tooltip="This box contains a basic python script and can be used to create any python script box you would like.&#x0A;&#x0A;To edit its script, double-click on it." x="192" y="323"><bitmap>media/images/box/box-python-script.png</bitmap><script language="4"><content><![CDATA[from BaseHTTPServer import BaseHTTPRequestHandler, HTTPServer
+import json
+import datetime
+
+class MyClass(GeneratedClass):
+    def __init__(self):
+        GeneratedClass.__init__(self)
+
+        self.tracker = ALProxy( "ALTracker" )
+
+        # look at parameter
+        self.x = 0.0
+        self.y = 0.0
+        self.z = 0.0
+        self.maxSpeed = 0.2
+        self.useWholeBody = False
+        self.frame = 0 #FRAME TORSO
+
+        # take a picture
+        self.resolutionMap = {
+            '160 x 120': 0,
+            '320 x 240': 1,
+            '640 x 480': 2,
+            '1280 x 960': 3
+        }
+        self.cameraMap = {
+            'Top': 0,
+            'Bottom': 1
+        }
+        self.record_dir = "/home/nao/recordings/cameras/attmgt"
+        self.json_dir = "/home/nao/recordings/json"
+
+
+    def onLoad(self):
+        self.httpd = None
+
+        self.bIsRunning = False
+        try:
+            self.photoCapture = ALProxy( "ALPhotoCapture" )
+        except Exception as e:
+            self.photoCapture = None
+            self.logger.error(e)
+        self.motion = ALProxy("ALMotion")
+        self.od = self.motion.getOrthogonalSecurityDistance()
+        self.td = self.motion.getTangentialSecurityDistance()
+        self.logger.info(str(self.od)+str(self.td))
+        self.motion.setOrthogonalSecurityDistance(0.1)
+        self.motion.setTangentialSecurityDistance(0.01)
+
+    def onUnload(self):
+        self.motion.setOrthogonalSecurityDistance(self.od)
+        self.motion.setTangentialSecurityDistance(self.td)
+
+        if self.httpd is not None:
+            self.httpd.shutdown()
+            self.httpd.server_close()
+
+    def onInput_onStart(self):
+
+        #HTTP リクエストを受信するポート番号 http://ロボットのIP:ポート番号/ でリクエストを受信します
+        PORT = 8001
+
+        self.logger.info('Start Server')
+        MyHandler.setParent(self)
+        self.httpd = HTTPServer(('', PORT), MyHandler)
+        self.httpd.allow_reuse_address = True
+        self.httpd.serve_forever()
+
+    def onInput_onStop(self):
+        self.onUnload() #it is recommended to reuse the clean-up as the box is stopped
+        self.onStopped(p) #activate the output of the box
+
+    def do_POST(self, http):
+        self.logger.info('received')
+        self.logger.info('**POST**')
+        content_len = int(http.headers.get('content-length'))
+        self.logger.info('content_len: ' + str(content_len))
+        requestBody = http.rfile.read(content_len).decode('utf-8')
+        #self.logger.info(requestBody)
+        #self.logger.info('requestBody=' + requestBody)
+        json_data = json.loads(requestBody)
+        self.logger.info('**JSON**')
+        self.logger.info(json_data)
+        todaydetail = datetime.datetime.today()
+        file_name = todaydetail.strftime("%Y%m%d%H%M%S")
+        with open(self.json_dir+'/'+file_name+'.json', 'wb') as f:
+            json.dump(json_data, f, sort_keys=False, indent=4)
+        self.logger.info('**SUCCESS**')
+        self.move_take_photos()
+        http.send_response(200)
+        http.send_header('Content-type', 'text/json')
+        http.end_headers()
+        if json_data['stop_flg'] == 1:
+            self.logger.info('**STOP**')
+            self.stop_server()
+
+    def move_take_photos(self):
+        #self.onStopped() #activate the output of the box
+        ip = "pepper.local"
+        port = 9559
+
+        session = qi.Session()
+        try:
+            session.connect("tcp://" + ip + ":" + str(port))
+        except RuntimeError:
+            print ("Can't connect to Naoqi at ip \"" + ip + "\" on port " + str(port) +".\n"
+                   "Please check your script arguments. Run with -h option for help.")
+            sys.exit(1)
+        self.logger.info("はろー")
+
+        latest_json_file_name = self.get_latest_modified_file_path(self.json_dir)
+        with open(latest_json_file_name, 'r') as f:
+            route_dict = json.load(f)
+#        route = [
+#                #[0.0, 0.0, 3.1415],
+#                [6.0, 0.0, 0.],
+#                [0.0, 0.0, -3.1415],
+#                [6.0, 0.0, 0.],
+#                [0.0, 0.0, -3.1415],
+#                ]
+        route = []
+        self.logger.info(route_dict)
+        for i in range(len(route_dict)-1):
+            i = str(i)
+            route.append([route_dict[i]['x'], route_dict[i]['y'], route_dict[i]['theta']])
+        self.logger.info(route)
+        self.navigation_service = session.service("ALNavigation")
+        self.motion_service = session.service("ALMotion")
+
+        # Wake up robot
+        # self.motion_service.wakeUp()
+        for dest in route:
+            self.logger.info(dest)
+            self.motion_service.moveTo(dest[0], dest[1], dest[2])
+            time.sleep(1)
+        self.look_at_left()
+        self.take_a_pic()
+        self.look_at_right()
+        self.take_a_pic()
+        self.look_at_forward()
+        self.logger.info('Move finish!')
+
+    def onInput_onStop(self):
+        self.onUnload() #it is recommended to reuse the clean-up as the box is stopped
+        self.onStopped() #activate the output of the box
+
+    def look_at_left(self):
+        self.x = 0.0
+        self.y = 1.0
+        self.z = 0.0
+        self.tracker.lookAt([self.x, self.y, self.z], self.frame, self.maxSpeed, self.useWholeBody)
+
+    def look_at_right(self):
+        self.x = 0.0
+        self.y = -1.0
+        self.z = 0.0
+        self.tracker.lookAt([self.x, self.y, self.z], self.frame, self.maxSpeed, self.useWholeBody)
+
+    def look_at_forward(self):
+        self.x = 0.0
+        self.y = 0.0
+        self.z = 0.0
+        self.tracker.lookAt([self.x, self.y, self.z], self.frame, self.maxSpeed, self.useWholeBody)
+
+    def take_a_pic(self):
+        if( self.bIsRunning ):
+            return
+        self.bIsRunning = True
+        resolution = self.resolutionMap['640 x 480']
+        cameraID = self.cameraMap['Top']
+        todaydetail = datetime.datetime.today()
+        fileName = todaydetail.strftime("%Y%m%d%H%M%S")
+        if self.photoCapture:
+            self.photoCapture.setResolution(resolution)
+            self.photoCapture.setCameraID(cameraID)
+            self.photoCapture.setPictureFormat("png")
+            self.photoCapture.takePicture( self.record_dir, fileName )
+            self.logger.info('Take a Picture!')
+        self.bIsRunning = False
+
+    def get_latest_modified_file_path(self, dirname):
+        target = os.path.join(dirname, '*')
+        files = [(f, os.path.getmtime(f)) for f in glob(target)]
+        latest_modified_file_path = sorted(files, key=lambda files: files[1])[-1]
+        return latest_modified_file_path[0]
+
+
+class MyHandler(BaseHTTPRequestHandler):
+    _parent = None
+
+#    def do_GET(self):
+#        MyHandler._parent.do_GET(self)
+
+    def do_POST(self):
+        MyHandler._parent.do_POST(self)
+
+
+    @staticmethod
+    def setParent(parent):
+        MyHandler._parent = parent
+
+
+
+    # BaseHTTPServer.BaseHTTPRequestHandler を経由して HTTP GET リクエストがあった時呼ばれます
+    # http オブジェクトの中に以下のドキュメントが示す内容が入っています
+    # http://docs.python.jp/2/library/basehttpserver.html#BaseHTTPServer.BaseHTTPRequestHandler
+#    def do_GET(self, http):
+
+#        #ブラウザーからのリクエストの場合、実際のリクエストとは別に favicon.ico へのリクエストが来る、これは無視
+#        if http.path.endswith('favicon.ico'):
+#            return;
+
+#        self.logger.info("request url:" + http.path)
+
+#        http.send_response(200)
+#        http.send_header("Content-type", "text/plain")
+#        http.end_headers()
+#        http.wfile.write("This is a test response")]]></content></script><Input name="onLoad" type="1" type_size="1" nature="0" inner="1" tooltip="Signal sent when diagram is loaded." id="1" /><Input name="onStart" type="1" type_size="1" nature="2" inner="0" tooltip="Box behavior starts when a signal is received on this input." id="2" /><Input name="onStop" type="1" type_size="1" nature="3" inner="0" tooltip="Box behavior stops when a signal is received on this input." id="3" /><Output name="stop_server" type="1" type_size="1" nature="1" inner="0" tooltip="" id="4" /></Box><Link inputowner="0" indexofinput="4" outputowner="2" indexofoutput="4" /><Link inputowner="5" indexofinput="2" outputowner="9" indexofoutput="4" /><Link inputowner="5" indexofinput="2" outputowner="7" indexofoutput="4" /><Link inputowner="0" indexofinput="4" outputowner="5" indexofoutput="3" /><Link inputowner="6" indexofinput="2" outputowner="10" indexofoutput="4" /><Link inputowner="0" indexofinput="4" outputowner="10" indexofoutput="5" /><Link inputowner="10" indexofinput="2" outputowner="6" indexofoutput="4" /><Link inputowner="0" indexofinput="4" outputowner="8" indexofoutput="4" /><Link inputowner="8" indexofinput="2" outputowner="0" indexofoutput="2" /></Diagram></BehaviorKeyframe></BehaviorLayer></Timeline></Box></ChoregrapheProject>
