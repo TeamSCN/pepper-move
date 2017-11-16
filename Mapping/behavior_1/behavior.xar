@@ -1048,7 +1048,9 @@ class MyClass(GeneratedClass):
         latest_modified_file_path = sorted(files, key=lambda files: files[1])[-1]
         return latest_modified_file_path[0]]]></content></script><Input name="onLoad" type="1" type_size="1" nature="0" inner="1" tooltip="Signal sent when diagram is loaded." id="1" /><Input name="onStart" type="1" type_size="1" nature="2" inner="0" tooltip="Box behavior starts when a signal is received on this input." id="2" /><Input name="onStop" type="1" type_size="1" nature="3" inner="0" tooltip="Box behavior stops when a signal is received on this input." id="3" /><Output name="onStopped" type="1" type_size="1" nature="1" inner="0" tooltip="Signal sent when box behavior is finished." id="4" /></Box><Box name="Json server including move" id="8" localization="8" tooltip="This box contains a basic python script and can be used to create any python script box you would like.&#x0A;&#x0A;To edit its script, double-click on it." x="192" y="323"><bitmap>media/images/box/box-python-script.png</bitmap><script language="4"><content><![CDATA[from BaseHTTPServer import BaseHTTPRequestHandler, HTTPServer
 import json
+import os
 import datetime
+import requests
 
 class MyClass(GeneratedClass):
     def __init__(self):
@@ -1100,6 +1102,7 @@ class MyClass(GeneratedClass):
         self.motion.setTangentialSecurityDistance(self.td)
 
         if self.httpd is not None:
+            self.logger.info('Server shutdown')
             self.httpd.shutdown()
             self.httpd.server_close()
 
@@ -1168,7 +1171,7 @@ class MyClass(GeneratedClass):
 #                ]
         route = []
         self.logger.info(route_dict)
-        for i in range(len(route_dict)-2):
+        for i in range(len(route_dict)-4):
             i = str(i)
             route.append([route_dict[i]['x'], route_dict[i]['y'], route_dict[i]['theta']])
         self.logger.info(route)
@@ -1183,9 +1186,9 @@ class MyClass(GeneratedClass):
             time.sleep(1)
         if route_dict['photo_flg'] == 1:
             self.look_at_left()
-            self.take_a_pic()
+            self.take_a_pic(route_dict)
             self.look_at_right()
-            self.take_a_pic()
+            self.take_a_pic(route_dict)
             self.look_at_forward()
         self.logger.info('Move finish!')
 
@@ -1211,21 +1214,31 @@ class MyClass(GeneratedClass):
         self.z = 0.0
         self.tracker.lookAt([self.x, self.y, self.z], self.frame, self.maxSpeed, self.useWholeBody)
 
-    def take_a_pic(self):
+    def take_a_pic(self, json):
         if( self.bIsRunning ):
             return
         self.bIsRunning = True
         resolution = self.resolutionMap['640 x 480']
         cameraID = self.cameraMap['Top']
         todaydetail = datetime.datetime.today()
-        fileName = todaydetail.strftime("%Y%m%d%H%M%S")
+        fileName = todaydetail.strftime("%Y%m%d%H%M%S") + '_' + str(json['dest_x']) + '-' + str(json['dest_y']) + '.'
         if self.photoCapture:
             self.photoCapture.setResolution(resolution)
             self.photoCapture.setCameraID(cameraID)
             self.photoCapture.setPictureFormat("png")
             self.photoCapture.takePicture( self.record_dir, fileName )
             self.logger.info('Take a Picture!')
+        self.send_image(os.path.join(self.record_dir, fileName[:-1]+'.png'))
         self.bIsRunning = False
+
+    def send_image(self, file_name):
+        url = "http://192.168.1.244/attmgt/image/"
+        self.logger.info(file_name)
+        files = {'image': open(file_name, "rb")}
+        self.logger.info('Send image!')
+        res = requests.post(url, files=files)
+        self.logger.info(res)
+
 
     def get_latest_modified_file_path(self, dirname):
         target = os.path.join(dirname, '*')
