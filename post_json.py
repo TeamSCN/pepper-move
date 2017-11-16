@@ -6,7 +6,7 @@ if __name__ == '__main__':
     headers = {"Content-Type" : "application/json"}
 
     # PythonオブジェクトをJSONに変換する
-    obj = {'0':{"x" : 1.0, 'y':0.0, 'theta':0.0}, 'stop_flg': 0}
+    obj = {'0':{"x" : 1.0, 'y':0.0, 'theta':0.0}, 'stop_flg': 0, 'photo_flg':1}
     json_data = json.dumps(obj).encode("utf-8")
 
     # httpリクエストを準備してPOST

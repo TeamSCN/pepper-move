@@ -1168,7 +1168,7 @@ class MyClass(GeneratedClass):
 #                ]
         route = []
         self.logger.info(route_dict)
-        for i in range(len(route_dict)-1):
+        for i in range(len(route_dict)-2):
             i = str(i)
             route.append([route_dict[i]['x'], route_dict[i]['y'], route_dict[i]['theta']])
         self.logger.info(route)
@@ -1181,11 +1181,12 @@ class MyClass(GeneratedClass):
             self.logger.info(dest)
             self.motion_service.moveTo(dest[0], dest[1], dest[2])
             time.sleep(1)
-        self.look_at_left()
-        self.take_a_pic()
-        self.look_at_right()
-        self.take_a_pic()
-        self.look_at_forward()
+        if route_dict['photo_flg'] == 1:
+            self.look_at_left()
+            self.take_a_pic()
+            self.look_at_right()
+            self.take_a_pic()
+            self.look_at_forward()
         self.logger.info('Move finish!')
 
     def onInput_onStop(self):
