@@ -843,7 +843,7 @@ class MyClass(GeneratedClass):
     def onInput_onStart(self):
 
         #HTTP リクエストを受信するポート番号 http://ロボットのIP:ポート番号/ でリクエストを受信します
-        PORT = 8000
+        PORT = 8001
 
         self.logger.info('Start Server')
         MyHandler.setParent(self)
@@ -902,8 +902,8 @@ class MyHandler(BaseHTTPRequestHandler):
 #    def do_GET(self):
 #        MyHandler._parent.do_GET(self)
 
-    def do_POST(self, http):
-        MyHandler._parent.do_POST(self, http)
+    def do_POST(self):
+        MyHandler._parent.do_POST(self)
 
 
     @staticmethod
@@ -1046,4 +1046,4 @@ class MyClass(GeneratedClass):
         target = os.path.join(dirname, '*')
         files = [(f, os.path.getmtime(f)) for f in glob(target)]
         latest_modified_file_path = sorted(files, key=lambda files: files[1])[-1]
-        return latest_modified_file_path[0]]]></content></script><Input name="onLoad" type="1" type_size="1" nature="0" inner="1" tooltip="Signal sent when diagram is loaded." id="1" /><Input name="onStart" type="1" type_size="1" nature="2" inner="0" tooltip="Box behavior starts when a signal is received on this input." id="2" /><Input name="onStop" type="1" type_size="1" nature="3" inner="0" tooltip="Box behavior stops when a signal is received on this input." id="3" /><Output name="onStopped" type="1" type_size="1" nature="1" inner="0" tooltip="Signal sent when box behavior is finished." id="4" /></Box><Link inputowner="0" indexofinput="4" outputowner="2" indexofoutput="4" /><Link inputowner="5" indexofinput="2" outputowner="9" indexofoutput="4" /><Link inputowner="5" indexofinput="2" outputowner="7" indexofoutput="4" /><Link inputowner="0" indexofinput="4" outputowner="5" indexofoutput="3" /><Link inputowner="10" indexofinput="2" outputowner="0" indexofoutput="2" /><Link inputowner="0" indexofinput="4" outputowner="6" indexofoutput="4" /><Link inputowner="6" indexofinput="2" outputowner="10" indexofoutput="4" /><Link inputowner="0" indexofinput="4" outputowner="10" indexofoutput="5" /></Diagram></BehaviorKeyframe></BehaviorLayer></Timeline></Box></ChoregrapheProject>
+        return latest_modified_file_path[0]]]></content></script><Input name="onLoad" type="1" type_size="1" nature="0" inner="1" tooltip="Signal sent when diagram is loaded." id="1" /><Input name="onStart" type="1" type_size="1" nature="2" inner="0" tooltip="Box behavior starts when a signal is received on this input." id="2" /><Input name="onStop" type="1" type_size="1" nature="3" inner="0" tooltip="Box behavior stops when a signal is received on this input." id="3" /><Output name="onStopped" type="1" type_size="1" nature="1" inner="0" tooltip="Signal sent when box behavior is finished." id="4" /></Box><Link inputowner="0" indexofinput="4" outputowner="2" indexofoutput="4" /><Link inputowner="5" indexofinput="2" outputowner="9" indexofoutput="4" /><Link inputowner="5" indexofinput="2" outputowner="7" indexofoutput="4" /><Link inputowner="0" indexofinput="4" outputowner="5" indexofoutput="3" /><Link inputowner="10" indexofinput="2" outputowner="0" indexofoutput="2" /><Link inputowner="6" indexofinput="2" outputowner="10" indexofoutput="4" /><Link inputowner="0" indexofinput="4" outputowner="10" indexofoutput="5" /><Link inputowner="10" indexofinput="2" outputowner="6" indexofoutput="4" /></Diagram></BehaviorKeyframe></BehaviorLayer></Timeline></Box></ChoregrapheProject>
