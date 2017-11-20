@@ -1232,7 +1232,7 @@ class MyClass(GeneratedClass):
         self.bIsRunning = False
 
     def send_image(self, file_name):
-        url = "http://192.168.1.244/attmgt/image/"
+        url = "http://192.168.1.244/detection/"
         self.logger.info(file_name)
         files = {'image': open(file_name, "rb")}
         self.logger.info('Send image!')

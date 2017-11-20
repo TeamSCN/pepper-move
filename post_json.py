@@ -1,7 +1,7 @@
 import urllib.request, json
 
 if __name__ == '__main__':
-    url = "http://192.168.1.140:8000"
+    url = "http://192.168.1.140:8001"
     method = "POST"
     headers = {"Content-Type" : "application/json"}
 
