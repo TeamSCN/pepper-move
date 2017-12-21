@@ -1109,7 +1109,7 @@ class MyClass(GeneratedClass):
     def onInput_onStart(self):
 
         #HTTP リクエストを受信するポート番号 http://ロボットのIP:ポート番号/ でリクエストを受信します
-        PORT = 8001
+        PORT = 8000
 
         self.logger.info('Start Server')
         MyHandler.setParent(self)
